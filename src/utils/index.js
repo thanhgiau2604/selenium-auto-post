@@ -12,15 +12,9 @@ export const envInfo = {
 
 export const data = [
     {
-        project: "Gimic - CML",
-        date: "20230403",
-        content: "Review and fix bugs",
-        hour: 4
-    },
-    {
         project: "25-Self Research",
-        date: "20230403",
+        date: "20230412",
         content: "Research vuejs",
-        hour: 4
+        hour: 8
     }
 ]
