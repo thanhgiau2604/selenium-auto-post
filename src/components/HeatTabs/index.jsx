@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
-import TodayTab from '@/components/TodayTab';
-import RangeTab from '@/components/RangeTab';
+import TodayTab from '@/components/HeatTabs/TodayTab';
+import RangeTab from '@/components/HeatTabs/RangeTab';
 
 const HeatTabs = () => {
 	return (
