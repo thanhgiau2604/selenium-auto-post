@@ -28,3 +28,14 @@ export const data = [
 ];
 
 export const getTodayValue = () => moment(new Date()).format('YYYYMMDD');
+
+export const formatDate = date => moment(date).format('DD/MM/YYYY');
+
+export const getListDate = (start, end) => {
+	if (!start || !end) return [];
+	const dates = [];
+	for (var m = moment(start); m.diff(end, 'days') <= 0; m.add(1, 'days')) {
+		dates.push(m.format('MM/DD/YYYY'));
+	}
+	return dates;
+};

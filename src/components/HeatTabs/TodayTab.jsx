@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@chakra-ui/react';
+import { Button, Stack } from '@chakra-ui/react';
 import moment from 'moment/moment';
 import { TODAY_INITIAL } from '@/constants';
 import { Form, Formik } from 'formik';
@@ -23,9 +23,11 @@ const TodayTab = () => {
 			>
 				{({ isSubmitting }) => (
 					<Form>
-						<SelectProject />
-						<InputContent />
-						<InputHour />
+						<Stack gap={2}>
+							<SelectProject />
+							<InputContent />
+							<InputHour />
+						</Stack>
 
 						<Button
 							mt={4}

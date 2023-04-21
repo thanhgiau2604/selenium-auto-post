@@ -7,6 +7,14 @@ export const TODAY_INITIAL = {
 	content: '',
 };
 
+export const DEFAULT_PROJECT = 'project 1';
+
+export const RANGE_INITIAL = {
+	start_date: '',
+	end_date: '',
+	data: [{ content: '', hour: 8, project: DEFAULT_PROJECT }],
+};
+
 export const PROJECTS = [
 	{ id: 1, name: 'project 1' },
 	{ id: 2, name: 'project 2' },
