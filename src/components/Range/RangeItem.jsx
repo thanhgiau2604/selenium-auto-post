@@ -5,20 +5,35 @@ import { InputContent, InputHour, SelectProjectV2 } from '../Inputs';
 import { useFormikContext } from 'formik';
 import { DEFAULT_DATA } from '@/constants';
 import { Tooltip } from 'react-tooltip';
+import { confirmYesNo } from '@/utils/Alert';
 
 const RangeItem = ({ index, date }) => {
 	const { values, setFieldValue } = useFormikContext();
 
 	const handleDuplicateData = () => {
-		const newData = { ...values.data };
+		const newData = [...values.data];
 		newData[index] = { ...newData[index - 1] };
 		setFieldValue('data', newData);
 	};
 
 	const handleClearData = () => {
-		const newData = { ...values.data };
+		const newData = [...values.data];
 		newData[index] = { ...DEFAULT_DATA };
 		setFieldValue('data', newData);
+	};
+
+	const handleFillAll = async () => {
+		const result = await confirmYesNo(
+			'Are you sure you want to fill all the data with this data?',
+			''
+		);
+		if (result.isConfirmed) {
+			const newData = [...values.data].map(item => ({
+				...values.data[index],
+				date: item.date,
+			}));
+			setFieldValue('data', newData);
+		}
 	};
 
 	return (
@@ -56,6 +71,7 @@ const RangeItem = ({ index, date }) => {
 						data-tooltip-id='fill-all'
 						data-tooltip-content='Fill all with this'
 						outline='none'
+						onClick={handleFillAll}
 					/>
 				</Flex>
 			</Flex>

@@ -1,5 +1,7 @@
 import moment from 'moment/moment';
 
+export * from './Alert';
+
 export const getYear = date => date.substring(0, 4);
 
 export const getMonth = date => (Number(date.substring(4, 6)) - 1).toString();
