@@ -19,7 +19,10 @@
     "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "selenium-webdriver": "^4.8.2"
+    "react-tooltip": "^5.11.1",
+    "recoil": "^0.7.7",
+    "selenium-webdriver": "^4.8.2",
+    "sweetalert2": "^11.7.3"
   },
   "devDependencies": {
     "eslint": "8.37.0",

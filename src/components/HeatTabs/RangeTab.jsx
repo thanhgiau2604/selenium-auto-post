@@ -5,13 +5,20 @@ import RangeOption from '../Range/RangeOption';
 import { RANGE_INITIAL } from '@/constants';
 import RangeDate from '../Range/RangeDate';
 import RangeArray from '../Range/RangeArray';
-import { getListDate } from '@/utils/index';
+import { useRecoilState } from 'recoil';
+import { dateOptionsState } from 'src/atoms/dateOptions';
 
 const RangeTab = () => {
 	const [init, setInit] = useState(RANGE_INITIAL);
+	const [option, setOption] = useRecoilState(dateOptionsState);
+
+	const updateOption = value => {
+		setOption(value);
+	};
+
 	return (
 		<div className='range-tab'>
-			<RangeOption />
+			<RangeOption value={option} updateValue={updateOption} />
 			<Formik
 				initialValues={init}
 				enableReinitialize

@@ -29,13 +29,22 @@ export const data = [
 
 export const getTodayValue = () => moment(new Date()).format('YYYYMMDD');
 
-export const formatDate = date => moment(date).format('DD/MM/YYYY');
+export const formatDate = date => moment(date).format('ddd, DD/MM/YYYY');
+export const formatDate2 = date => moment(date).format('yy-MM-DD');
 
-export const getListDate = (start, end) => {
+export const getListDate = (start, end, isExceptWeekend) => {
 	if (!start || !end) return [];
 	const dates = [];
 	for (var m = moment(start); m.diff(end, 'days') <= 0; m.add(1, 'days')) {
-		dates.push(m.format('MM/DD/YYYY'));
+		if (isExceptWeekend && isWeekendDate(m)) {
+			continue;
+		} else {
+			dates.push(formatDate(m));
+		}
 	}
 	return dates;
+};
+
+export const isWeekendDate = day => {
+	return moment(day).isoWeekday() >= 6;
 };

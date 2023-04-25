@@ -8,8 +8,9 @@ import {
 	Stack,
 	Radio,
 } from '@chakra-ui/react';
+import { DATE_OPTIONS } from '@/constants';
 
-const RangeOption = () => {
+const RangeOption = ({ value, updateValue }) => {
 	return (
 		<Box mb={3}>
 			<Center mb={2} fontWeight={700}>
@@ -17,10 +18,10 @@ const RangeOption = () => {
 			</Center>
 			<Card>
 				<CardBody>
-					<RadioGroup>
+					<RadioGroup value={value} onChange={updateValue}>
 						<Stack direction='row' wrap gap={3}>
 							<Radio value='all'>All</Radio>
-							<Radio value='except_fr_sa'>Except Fri - Sat</Radio>
+							<Radio value={DATE_OPTIONS.except_weekend}>Except Weekend</Radio>
 						</Stack>
 					</RadioGroup>
 				</CardBody>

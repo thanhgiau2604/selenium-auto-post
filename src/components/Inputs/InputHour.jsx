@@ -12,7 +12,14 @@ export const InputHour = props => {
 					w={100}
 					flexShrink={0}
 				>
-					<Input type='number' placeholder='Hour' {...field} max={8} min={1} />
+					<Input
+						type='number'
+						placeholder='Hour'
+						{...field}
+						max={8}
+						min={1}
+						value={field.value || ''}
+					/>
 					<FormErrorMessage>{form.errors.name}</FormErrorMessage>
 				</FormControl>
 			)}

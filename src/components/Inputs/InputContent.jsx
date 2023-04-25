@@ -10,7 +10,12 @@ export const InputContent = props => {
 					maxW='700px'
 					isInvalid={form.errors.name && form.touched.name}
 				>
-					<Input type='text' placeholder='Task content' {...field} />
+					<Input
+						type='text'
+						placeholder='Task content'
+						{...field}
+						value={field.value || ''}
+					/>
 					<FormErrorMessage>{form.errors.name}</FormErrorMessage>
 				</FormControl>
 			)}

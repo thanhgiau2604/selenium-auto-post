@@ -9,10 +9,17 @@ export const TODAY_INITIAL = {
 
 export const DEFAULT_PROJECT = 'project 1';
 
+export const DEFAULT_DATA = {
+	project: DEFAULT_PROJECT,
+	date: '',
+	hour: 8,
+	content: '',
+};
+
 export const RANGE_INITIAL = {
 	start_date: '',
 	end_date: '',
-	data: [{ content: '', hour: 8, project: DEFAULT_PROJECT }],
+	data: [{ ...DEFAULT_DATA }],
 };
 
 export const PROJECTS = [
@@ -22,3 +29,8 @@ export const PROJECTS = [
 	{ id: 4, name: 'project 4' },
 	{ id: 5, name: 'project 5' },
 ];
+
+export const DATE_OPTIONS = {
+	all: 'all',
+	except_weekend: 'except_weekend',
+};
