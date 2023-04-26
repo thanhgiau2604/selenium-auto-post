@@ -14,7 +14,7 @@ const RangeOption = ({ value, updateValue }) => {
 	return (
 		<Box mb={3}>
 			<Center mb={2} fontWeight={700}>
-				Select option (required):
+				Select option:
 			</Center>
 			<Card>
 				<CardBody>

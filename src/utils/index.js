@@ -1,6 +1,7 @@
 import moment from 'moment/moment';
 
 export * from './Alert';
+export * from './ValidateFunc';
 
 export const getYear = date => date.substring(0, 4);
 

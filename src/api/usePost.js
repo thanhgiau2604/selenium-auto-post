@@ -15,7 +15,7 @@ export const usePost = () => {
 				body: JSON.stringify(reqData),
 			});
 			const data = await res.json();
-			setData(data.result);
+			setData(data);
 			setLoading(false);
 		} catch (err) {
 			setError(err);

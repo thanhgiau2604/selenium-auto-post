@@ -1,16 +1,18 @@
 import React from 'react';
 import { FormControl, FormErrorMessage } from '@chakra-ui/react';
 import { PROJECTS } from '@/constants';
-import { FastField } from 'formik';
+import { FastField, getIn } from 'formik';
 import { Card, CardBody, RadioGroup, Stack, Radio } from '@chakra-ui/react';
+import { validateRequired } from '@/utils/ValidateFunc';
 
 export const SelectProject = props => {
+	const name = props.name || 'project';
 	return (
-		<FastField name={props.name || 'project'}>
+		<FastField name={name} validate={validateRequired}>
 			{({ field, form }) => (
 				<FormControl
 					maxW='700px'
-					isInvalid={form.errors.name && form.touched.name}
+					isInvalid={getIn(form.errors, name) && getIn(form.touched, name)}
 				>
 					<Card>
 						<CardBody>
@@ -30,7 +32,7 @@ export const SelectProject = props => {
 							</RadioGroup>
 						</CardBody>
 					</Card>
-					<FormErrorMessage>{form.errors.name}</FormErrorMessage>
+					<FormErrorMessage>{getIn(form.errors, name)}</FormErrorMessage>
 				</FormControl>
 			)}
 		</FastField>

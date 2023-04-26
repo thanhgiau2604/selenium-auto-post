@@ -1,26 +1,28 @@
 import React from 'react';
-import { FastField } from 'formik';
+import { FastField, getIn } from 'formik';
 import { FormControl, FormErrorMessage, Input } from '@chakra-ui/react';
+import { validateRequired } from '@/utils/ValidateFunc';
 
 export const InputHour = props => {
+	const name = props.name || 'hour';
 	return (
-		<FastField name={props.name || 'hour'}>
+		<FastField name={name} validate={validateRequired}>
 			{({ field, form }) => (
 				<FormControl
 					maxW='700px'
-					isInvalid={form.errors.name && form.touched.name}
+					isInvalid={getIn(form.errors, name) && getIn(form.touched, name)}
 					w={100}
 					flexShrink={0}
 				>
 					<Input
+						{...field}
 						type='number'
 						placeholder='Hour'
-						{...field}
 						max={8}
 						min={1}
 						value={field.value || ''}
 					/>
-					<FormErrorMessage>{form.errors.name}</FormErrorMessage>
+					<FormErrorMessage>{getIn(form.errors, name)}</FormErrorMessage>
 				</FormControl>
 			)}
 		</FastField>

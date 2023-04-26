@@ -30,7 +30,7 @@ const RangeTab = () => {
 					actions.setSubmitting(false);
 				}}
 			>
-				{({ isSubmitting }) => {
+				{({ isSubmitting, errors }) => {
 					return (
 						<Form>
 							<RangeDate />

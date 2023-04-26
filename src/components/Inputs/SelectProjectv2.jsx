@@ -1,15 +1,16 @@
 import React from 'react';
 import { FormControl, FormErrorMessage, Select } from '@chakra-ui/react';
 import { PROJECTS } from '@/constants';
-import { FastField } from 'formik';
+import { FastField, getIn } from 'formik';
 
 export const SelectProjectV2 = props => {
+	const name = props.name || 'project';
 	return (
-		<FastField name={props.name || 'project'}>
+		<FastField name={name}>
 			{({ field, form }) => (
 				<FormControl
 					maxW='700px'
-					isInvalid={form.errors.name && form.touched.name}
+					isInvalid={getIn(form.errors, name) && getIn(form.touched, name)}
 					maxWidth={200}
 				>
 					<Select {...field}>
@@ -19,7 +20,7 @@ export const SelectProjectV2 = props => {
 							</option>
 						))}
 					</Select>
-					<FormErrorMessage>{form.errors.name}</FormErrorMessage>
+					<FormErrorMessage>{getIn(form.errors, name)}</FormErrorMessage>
 				</FormControl>
 			)}
 		</FastField>

@@ -1,6 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
-import { Button, Stack } from '@chakra-ui/react';
+import {
+	Alert,
+	AlertIcon,
+	AlertTitle,
+	Box,
+	Button,
+	Stack,
+} from '@chakra-ui/react';
 import moment from 'moment/moment';
 import { TODAY_INITIAL } from '@/constants';
 import { Form, Formik } from 'formik';
@@ -10,6 +17,7 @@ import { usePost } from 'src/api';
 const TodayTab = () => {
 	const todayStr = moment(new Date()).format('YYYY/MM/DD');
 	const { postAction, data } = usePost();
+	const dataResult = data?.data;
 	return (
 		<div className='today-tab'>
 			<p className='today-date'>
@@ -22,29 +30,37 @@ const TodayTab = () => {
 					actions.setSubmitting(false);
 				}}
 			>
-				{({ isSubmitting }) => (
-					<Form>
-						<Stack gap={2}>
-							<SelectProject />
-							<InputContent />
-							<InputHour />
-						</Stack>
-
-						<Button
-							mt={4}
-							colorScheme='teal'
-							type='submit'
-							isLoading={isSubmitting}
-						>
-							Submit
-						</Button>
-					</Form>
-				)}
-			</Formik>
-			{data &&
-				data.map((item, index) => {
+				{({ isSubmitting, errors }) => {
 					return (
-						<div key={index.toString()} style={{ marginTop: '20px' }}>
+						<Form>
+							<Stack gap={2}>
+								<SelectProject />
+								<InputContent />
+								<InputHour />
+							</Stack>
+
+							<Button
+								mt={4}
+								colorScheme='teal'
+								type='submit'
+								isLoading={isSubmitting}
+							>
+								Submit
+							</Button>
+						</Form>
+					);
+				}}
+			</Formik>
+			{data?.error && (
+				<Alert status='error' mt={5} borderRadius={7}>
+					<AlertIcon />
+					<AlertTitle>{data?.message}</AlertTitle>
+				</Alert>
+			)}
+			{dataResult &&
+				dataResult.map((item, index) => {
+					return (
+						<Box key={index.toString()} mt={5}>
 							<p>{item.title}</p>
 							<img
 								src={`data:image/jpeg;base64, ${item.image}`}
@@ -52,7 +68,7 @@ const TodayTab = () => {
 								alt='image'
 								width='100%'
 							/>
-						</div>
+						</Box>
 					);
 				})}
 		</div>

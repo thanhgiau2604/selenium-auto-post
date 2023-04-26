@@ -22,21 +22,26 @@ export const RANGE_INITIAL = {
 	data: [{ ...DEFAULT_DATA }],
 };
 
-export const PROJECTS = [
-	{ id: 1, name: '17-TE Website' },
-	{ id: 2, name: '25-Self Research' },
-	{ id: 3, name: '31-Mamacomi' },
-	{ id: 4, name: '42-TE Research' },
-	{ id: 5, name: '43-TE CrowdLoan' },
-	{ id: 6, name: '44-TE Training' },
-	{ id: 7, name: '45-TE Alarm' },
-	{ id: 8, name: 'Otomo - GuideNavi' },
-	{ id: 9, name: 'Gimic - PE' },
-	{ id: 10, name: 'Gimic - SNS' },
-	{ id: 11, name: 'Otomo - Wherever' },
-	{ id: 12, name: 'Gimic - CML' },
-];
+// export const PROJECTS = [
+// 	{ id: 1, name: '17-TE Website' },
+// 	{ id: 2, name: '25-Self Research' },
+// 	{ id: 3, name: '31-Mamacomi' },
+// 	{ id: 4, name: '42-TE Research' },
+// 	{ id: 5, name: '43-TE CrowdLoan' },
+// 	{ id: 6, name: '44-TE Training' },
+// 	{ id: 7, name: '45-TE Alarm' },
+// 	{ id: 8, name: 'Otomo - GuideNavi' },
+// 	{ id: 9, name: 'Gimic - PE' },
+// 	{ id: 10, name: 'Gimic - SNS' },
+// 	{ id: 11, name: 'Otomo - Wherever' },
+// 	{ id: 12, name: 'Gimic - CML' },
+// ];
 
+export const PROJECTS = [
+	{ id: 1, name: 'p 1' },
+	{ id: 2, name: 'p 2' },
+	{ id: 3, name: 'p 3' },
+];
 export const DATE_OPTIONS = {
 	all: 'all',
 	except_weekend: 'except_weekend',

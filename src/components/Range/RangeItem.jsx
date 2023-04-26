@@ -46,13 +46,13 @@ const RangeItem = ({ index, date }) => {
 					</TagLabel>
 				</Tag>
 			)}
-			<Flex justifyContent='space-between' alignItems='center'>
+			<Flex justifyContent='space-between'>
 				<Flex gap={2} flexBasis='90%'>
 					<InputContent name={`data[${index}].content`} />
 					<InputHour name={`data[${index}].hour`} />
 					<SelectProjectV2 name={`data[${index}].project`} />
 				</Flex>
-				<Flex gap={2} alignItems='center'>
+				<Flex gap={2} mt={3}>
 					{index !== 0 && (
 						<ArrowDownIcon
 							onClick={handleDuplicateData}

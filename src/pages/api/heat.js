@@ -1,28 +1,33 @@
 import { Builder, By, Key, until } from 'selenium-webdriver';
 import { Options } from 'selenium-webdriver/chrome';
-import { envInfo, formatDate3, getDate, getMonth, getYear } from '../../utils';
+import { envInfo, getDate, getMonth, getYear } from '../../utils';
 import moment from 'moment/moment';
+import { MsgError, MsgOK, MsgOKWithData } from '@/utils/ResponseMessage';
 
 const options = new Options();
 options.addArguments('--headless');
 
-let success = true;
+let apiError;
 const timer = ms => new Promise(res => setTimeout(res, ms));
-let driver = new Builder()
-	.forBrowser('chrome')
-	.setChromeOptions(options)
-	.build();
+let driver;
 
 const { baseUrl, email, password } = envInfo;
 
 async function handleLogin() {
-	await driver.get(`${baseUrl}/login`);
-	await driver.wait(until.elementLocated(By.name('email'))).sendKeys(email);
-	await driver.findElement(By.name('password')).sendKeys(password, Key.ENTER);
-	await driver.wait(
-		until.elementLocated(By.className('react-datepicker-wrapper'))
-	);
-	await timer(1000);
+	try {
+		await driver.get(`${baseUrl}/login`);
+		await driver.wait(until.elementLocated(By.name('email'))).sendKeys(email);
+		await driver.findElement(By.name('password')).sendKeys(password, Key.ENTER);
+		await driver.wait(
+			until.elementLocated(By.className('react-datepicker-wrapper')),
+			6000
+		);
+		await timer(1000);
+		return MsgOK;
+	} catch (error) {
+		driver.quit();
+		return MsgError('Login failed');
+	}
 }
 
 async function selectProject(projectName) {
@@ -32,17 +37,18 @@ async function selectProject(projectName) {
 				`//div[contains(@class,'HeatMapProjects__Item') and .//text()='${projectName}']`
 			)
 		);
+		if (!els) {
+			apiError = `Cannot select project: ${projectName}. Please try again`;
+		}
 		await els.click();
 	} catch (error) {
-		console.log(`Cannot select project: ${projectName}. Please try again`);
-		success = false;
+		apiError = `Cannot select project: ${projectName}. Please try again`;
 	}
 }
 
 async function selectDate(date) {
 	if (date.length !== 8 || !moment(date).isValid()) {
-		console.log(`${date} - This date is invalid.`);
-		success = false;
+		apiError = `${date} - This date is invalid.`;
 		return;
 	}
 	try {
@@ -67,8 +73,7 @@ async function selectDate(date) {
 		);
 		await daySelector.click();
 	} catch (error) {
-		console.log(`Cannot set Select date: ${date}. Please try again`);
-		success = false;
+		apiError = `Cannot set Select date: ${date}. Please try again`;
 	}
 }
 
@@ -82,8 +87,7 @@ async function setTaskContent(taskContent, hourTask) {
 		await hour.clear();
 		await hour.sendKeys(hourTask);
 	} catch (error) {
-		console.log(`Cannot set Task content. Please try again`);
-		success = false;
+		apiError = `Cannot set Task content. Please try again`;
 	}
 }
 
@@ -110,20 +114,23 @@ async function main(data) {
 	if (!data || !data.length) {
 		return [];
 	}
-	await handleLogin();
+	const res = await handleLogin();
+	if (res.error) {
+		return res;
+	}
 	const result = [];
 	for (let i = 0; i < data.length; i++) {
 		const heatItem = data[i];
 		const { project, date, content, hour } = heatItem;
 
-		if (success) await selectProject(project);
-		if (success) await selectDate(date);
-		if (success) await setTaskContent(content, hour);
-		if (success) await postAction();
+		if (!apiError) await selectProject(project);
+		if (!apiError) await selectDate(date);
+		if (!apiError) await setTaskContent(content, hour);
+		if (!apiError) await postAction();
 
-		if (!success) {
+		if (apiError) {
 			driver.quit();
-			return result;
+			return MsgError(apiError);
 		}
 
 		const title = logger(heatItem);
@@ -136,10 +143,12 @@ async function main(data) {
 	}
 
 	driver.quit();
-	return result;
+	return MsgOKWithData(result);
 }
 
 export default async function handler(req, res) {
+	apiError = '';
+	driver = new Builder().forBrowser('chrome').setChromeOptions(options).build();
 	const result = await main(req.body);
-	res.status(200).json({ result });
+	res.status(200).json(result);
 }
