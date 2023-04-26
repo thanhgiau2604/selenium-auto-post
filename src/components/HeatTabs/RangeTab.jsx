@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
 import { Button } from '@chakra-ui/react';
@@ -7,10 +8,12 @@ import RangeDate from '../Range/RangeDate';
 import RangeArray from '../Range/RangeArray';
 import { useRecoilState } from 'recoil';
 import { dateOptionsState } from 'src/atoms/dateOptions';
+import { usePost } from 'src/api';
 
 const RangeTab = () => {
 	const [init, setInit] = useState(RANGE_INITIAL);
 	const [option, setOption] = useRecoilState(dateOptionsState);
+	const { postAction, data } = usePost();
 
 	const updateOption = value => {
 		setOption(value);
@@ -22,26 +25,12 @@ const RangeTab = () => {
 			<Formik
 				initialValues={init}
 				enableReinitialize
-				onSubmit={(values, actions) => {
-					console.log(values);
-					setTimeout(() => {
-						actions.setSubmitting(false);
-					}, 1000);
+				onSubmit={async (values, actions) => {
+					await postAction(values.data);
+					actions.setSubmitting(false);
 				}}
 			>
 				{({ isSubmitting }) => {
-					// useEffect(() => {
-					// 	setInit({
-					// 		start_date: values.start_date,
-					// 		end_date: values.end_date,
-					// 		data: getListDate(values.start_date, values.end_date).map(d => ({
-					// 			content: '',
-					// 			hour: 8,
-					// 			project: DEFAULT_PROJECT,
-					// 		})),
-					// 	});
-					// }, [values.start_date, values.end_date]);
-
 					return (
 						<Form>
 							<RangeDate />
@@ -58,6 +47,20 @@ const RangeTab = () => {
 					);
 				}}
 			</Formik>
+			{data &&
+				data.map((item, index) => {
+					return (
+						<div key={index.toString()} style={{ marginTop: '20px' }}>
+							<p>{item.title}</p>
+							<img
+								src={`data:image/jpeg;base64, ${item.image}`}
+								style={{ marginTop: '15px' }}
+								alt='image'
+								width='100%'
+							/>
+						</div>
+					);
+				})}
 		</div>
 	);
 };

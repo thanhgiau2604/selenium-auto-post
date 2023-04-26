@@ -6,6 +6,7 @@ import { useFormikContext } from 'formik';
 import { DEFAULT_DATA } from '@/constants';
 import { Tooltip } from 'react-tooltip';
 import { confirmYesNo } from '@/utils/Alert';
+import moment from 'moment';
 
 const RangeItem = ({ index, date }) => {
 	const { values, setFieldValue } = useFormikContext();
@@ -40,7 +41,9 @@ const RangeItem = ({ index, date }) => {
 		<Box mt={4}>
 			{date && (
 				<Tag mb={2} colorScheme='red' borderRadius='full'>
-					<TagLabel>{date}</TagLabel>
+					<TagLabel>
+						{moment(date, 'YYYYMMDD').format('ddd, DD/MM/YYYY')}
+					</TagLabel>
 				</Tag>
 			)}
 			<Flex justifyContent='space-between' alignItems='center'>

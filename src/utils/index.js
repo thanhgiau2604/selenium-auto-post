@@ -14,25 +14,26 @@ export const envInfo = {
 	baseUrl: process.env.BASE_URL,
 };
 
-export const data = [
-	{
-		project: 'Gimic - CML',
-		date: '20230403',
-		content: 'Review and fix bugs',
-		hour: 4,
-	},
-	{
-		project: '25-Self Research',
-		date: '20230403',
-		content: 'Research vuejs',
-		hour: 4,
-	},
-];
+// export const data = [
+// 	{
+// 		project: 'Gimic - CML',
+// 		date: '20230403',
+// 		content: 'Review and fix bugs',
+// 		hour: 4,
+// 	},
+// 	{
+// 		project: '25-Self Research',
+// 		date: '20230403',
+// 		content: 'Research vuejs',
+// 		hour: 4,
+// 	},
+// ];
 
 export const getTodayValue = () => moment(new Date()).format('YYYYMMDD');
 
 export const formatDate = date => moment(date).format('ddd, DD/MM/YYYY');
-export const formatDate2 = date => moment(date).format('yy-MM-DD');
+export const formatDate2 = date => moment(date).format('YYYYMMDD');
+export const formatDate3 = date => moment(date).format('YYYYMMDD');
 
 export const getListDate = (start, end, isExceptWeekend) => {
 	if (!start || !end) return [];
@@ -41,7 +42,7 @@ export const getListDate = (start, end, isExceptWeekend) => {
 		if (isExceptWeekend && isWeekendDate(m)) {
 			continue;
 		} else {
-			dates.push(formatDate(m));
+			dates.push(formatDate2(m));
 		}
 	}
 	return dates;

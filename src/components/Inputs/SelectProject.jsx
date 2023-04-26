@@ -15,9 +15,14 @@ export const SelectProject = props => {
 					<Card>
 						<CardBody>
 							<RadioGroup {...field}>
-								<Stack direction='row' wrap>
+								<Stack direction='row' flexWrap='wrap' gap={2}>
 									{PROJECTS.map(({ id, name }) => (
-										<Radio {...field} value={name} key={id}>
+										<Radio
+											{...field}
+											value={name}
+											key={id}
+											margin='0!important'
+										>
 											{name}
 										</Radio>
 									))}
