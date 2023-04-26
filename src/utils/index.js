@@ -34,7 +34,6 @@ export const getTodayValue = () => moment(new Date()).format('YYYYMMDD');
 
 export const formatDate = date => moment(date).format('ddd, DD/MM/YYYY');
 export const formatDate2 = date => moment(date).format('YYYYMMDD');
-export const formatDate3 = date => moment(date).format('YYYYMMDD');
 
 export const getListDate = (start, end, isExceptWeekend) => {
 	if (!start || !end) return [];
